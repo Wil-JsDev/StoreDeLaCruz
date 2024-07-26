@@ -18,6 +18,9 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia
             {
                 p.UseSqlServer(configuration.GetConnectionString("StoreConnection"));
             });
+
+            //Se debe de hacer la inyeccion de dependencia aqui desde Application a esta capa
+
         }
 
     }

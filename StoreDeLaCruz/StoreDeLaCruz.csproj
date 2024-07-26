@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\StoreDeLaCruz.Core.Aplication\StoreDeLaCruz.Core.Aplication.csproj" />
     <ProjectReference Include="..\StoreDeLaCruz.Infraestructura.Persistencia\StoreDeLaCruz.Infraestructura.Persistencia.csproj" />
   </ItemGroup>
 
