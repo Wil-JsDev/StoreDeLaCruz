@@ -1,14 +1,18 @@
 using StoreDeLaCruz.Infraestructura.Persistencia;
+using StoreDeLaCruz.Core.Aplication;
 
 var builder = WebApplication.CreateBuilder(args);
-var congiguration = builder.Configuration;
+var configuration = builder.Configuration;
 // Add services to the container.
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddInfraestructura(congiguration);
+
+builder.Services.AddInfraestructura(configuration);
+builder.Services.AddApplication();
+
 
 var app = builder.Build();
 
