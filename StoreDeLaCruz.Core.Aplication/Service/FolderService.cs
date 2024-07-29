@@ -13,10 +13,10 @@ namespace StoreDeLaCruz.Core.Aplication.Service
 {
     public class FolderService : IFolderService<FolderDTos, FolderInsertDTos, FolderUpdate>
     {
-        private IFolderRepository<Folder> _folderRepository;
+        private ICommonRepository<Folder> _folderRepository;
         private IMapper _mapper;
 
-        public FolderService(IFolderRepository<Folder> folderRepository,
+        public FolderService(ICommonRepository<Folder> folderRepository,
             IMapper mapper)
         {
             _folderRepository = folderRepository;
@@ -61,11 +61,11 @@ namespace StoreDeLaCruz.Core.Aplication.Service
 
             if (folder != null)
             {
-                var folderUpdate = _mapper.Map<FolderUpdate, Folder>(updateFolder, folder);
-                 _folderRepository.Update(folderUpdate);
+                folder = _mapper.Map<FolderUpdate, Folder>(updateFolder, folder);
+                 _folderRepository.Update(folder);
                  await  _folderRepository.Save();
 
-                var folderDto = _mapper.Map<FolderDTos>(updateFolder);
+                var folderDto = _mapper.Map<FolderDTos>(folder);
 
                 return folderDto;
             }
@@ -80,9 +80,12 @@ namespace StoreDeLaCruz.Core.Aplication.Service
 
             if (folder != null)
             {
-                var folderDto = _mapper.Map<FolderDTos>(folder);
+                
+                folder = _mapper.Map<Folder>(folder);
                 _folderRepository.Delete(folder);
                  await _folderRepository.Save();
+
+                var folderDto = _mapper.Map<FolderDTos>(folder);
 
                 return folderDto;
             }
@@ -91,7 +94,7 @@ namespace StoreDeLaCruz.Core.Aplication.Service
 
         }
 
-        public async Task Search()
+        public async Task Search(string search)
         {
 
         }
