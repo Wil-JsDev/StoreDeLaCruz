@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using StoreDeLaCruz.Core.Aplication.Interfaces.Repositories;
+using StoreDeLaCruz.Core.Domain.Entities;
 using StoreDeLaCruz.Infraestructura.Persistencia.Context;
+using StoreDeLaCruz.Infraestructura.Persistencia.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +23,10 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia
             });
 
             //Se debe de hacer la inyeccion de dependencia aqui desde Application a esta capa
+            #region Repository
+            services.AddScoped<INoteRepository<Nota>, NoteRepository>();
+            services.AddScoped<ICommonRepository<Folder>, FolderRepository>();
+            #endregion
 
         }
 
