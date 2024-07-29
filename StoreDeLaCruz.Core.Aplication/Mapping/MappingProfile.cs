@@ -28,9 +28,9 @@ namespace StoreDeLaCruz.Core.Aplication.Mapping
 
             #region FolderDtos
             CreateMap<FolderInsertDTos, Folder>();
-
-
-
+            CreateMap<Folder, FolderDTos>()
+                .ForMember(dto => dto.Id,
+                m => m.MapFrom(n => n.FolderId));
             CreateMap<FolderUpdate, Folder>();
             #endregion
         }
