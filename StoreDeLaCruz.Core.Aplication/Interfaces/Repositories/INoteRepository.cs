@@ -6,18 +6,8 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Core.Aplication.Interfaces.Repositories
 {
-    public interface INoteRepository<TEntity>
-    {
-        Task<IEnumerable<TEntity>> GetAll();
-
-        Task<TEntity> GetById(int id);
-
-        Task Add(TEntity entity);
-
-        void Update (TEntity entity);
-
-        void Delete(TEntity entity);
-
-        Task Save();
+    public interface INoteRepository<TEntity> : ICommonRepository<TEntity>
+    {  
+        IEnumerable<TEntity> Search(Func<TEntity, bool> filter);
     }
 }
