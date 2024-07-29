@@ -8,7 +8,7 @@ namespace StoreDeLaCruz.Core.Aplication.DTOs.Folder
 {
     public class FolderDTos
     {
-        public int FolderId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
     }
