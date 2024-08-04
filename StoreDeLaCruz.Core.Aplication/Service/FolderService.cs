@@ -13,10 +13,10 @@ namespace StoreDeLaCruz.Core.Aplication.Service
 {
     public class FolderService : IFolderService<FolderDTos, FolderInsertDTos, FolderUpdate>
     {
-        private ICommonRepository<Folder> _folderRepository;
+        private IGenericRepository<Folder> _folderRepository;
         private IMapper _mapper;
 
-        public FolderService(ICommonRepository<Folder> folderRepository,
+        public FolderService(IGenericRepository<Folder> folderRepository,
             IMapper mapper)
         {
             _folderRepository = folderRepository;

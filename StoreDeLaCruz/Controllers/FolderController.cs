@@ -7,9 +7,8 @@ using StoreDeLaCruz.Core.Aplication.Interfaces.Service;
 
 namespace StoreDeLaCruz.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class FolderController : ControllerBase
+    [ApiVersion("1.0")]
+    public class FolderController : BaseController
     {
 
         private IFolderService<FolderDTos, FolderInsertDTos, FolderUpdate> _folderService;

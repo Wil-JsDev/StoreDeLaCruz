@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Core.Aplication.Service
 {
-    public class NoteService : ICommonService<NotaDTos, NotaInsertDTos, NotaUpdateDTos>
+    public class NoteService : IGenericService<NotaDTos, NotaInsertDTos, NotaUpdateDTos>
     {
         private INoteRepository <Nota> _noteRepository;
         private IMapper _mapper;
@@ -62,9 +62,10 @@ namespace StoreDeLaCruz.Core.Aplication.Service
 
             if (noteID != null)
             {
-                  var noteDto = _mapper.Map<NotaDTos>(noteID);
+                  noteID = _mapper.Map<Nota>(noteID);
                  _noteRepository.Delete(noteID);
                  await _noteRepository.Save();
+                 var noteDto = _mapper.Map<NotaDTos>(noteID);
 
                 return noteDto;
             }

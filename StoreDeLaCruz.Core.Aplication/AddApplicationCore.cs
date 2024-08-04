@@ -19,7 +19,7 @@ namespace StoreDeLaCruz.Core.Aplication
 
             #region Services
             //Aqui van todas las inyecciones de dependencia de los service, es decir, las interfaces e inplementaciones de esas interfaces
-            services.AddScoped<ICommonService<NotaDTos,NotaInsertDTos,NotaUpdateDTos>, NoteService>();
+            services.AddScoped<IGenericService<NotaDTos,NotaInsertDTos,NotaUpdateDTos>, NoteService>();
             services.AddScoped<IFolderService<FolderDTos, FolderInsertDTos,FolderUpdate>, FolderService>();
             #endregion
 

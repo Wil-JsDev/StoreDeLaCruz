@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Core.Aplication.Interfaces.Repositories
 {
-    public interface INoteRepository<TEntity> : ICommonRepository<TEntity>
+    public interface INoteRepository<TEntity> : IGenericRepository<TEntity>
     {  
         IEnumerable<TEntity> Search(Func<TEntity, bool> filter);
     }
