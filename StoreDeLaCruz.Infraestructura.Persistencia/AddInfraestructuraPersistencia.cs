@@ -25,7 +25,7 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia
             //Se debe de hacer la inyeccion de dependencia aqui desde Application a esta capa
             #region Repository
             services.AddScoped<INoteRepository<Nota>, NoteRepository>();
-            services.AddScoped<ICommonRepository<Folder>, FolderRepository>();
+            services.AddScoped<IGenericRepository<Folder>, FolderRepository>();
             #endregion
 
         }

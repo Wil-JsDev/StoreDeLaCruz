@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Core.Aplication.Interfaces.Service
 {
-    public interface ICommonService <T, TI, TU>
+    public interface IGenericService <T, TI, TU>
     {
         Task<IEnumerable<T>> GetAll();
 

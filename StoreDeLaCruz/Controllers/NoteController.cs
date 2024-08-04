@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Asp.Versioning;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoreDeLaCruz.Core.Aplication.DTOs.Nota;
@@ -6,15 +7,14 @@ using StoreDeLaCruz.Core.Aplication.Interfaces.Service;
 
 namespace StoreDeLaCruz.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class NoteController : ControllerBase
+    [ApiVersion("1.0")]
+    public class NoteController : BaseController
     {
-        private ICommonService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> _serviceNota;
+        private IGenericService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> _serviceNota;
         private IValidator<NotaInsertDTos> _validationInsert;
         private IValidator<NotaUpdateDTos> _validationUpdate;
 
-        public NoteController(ICommonService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> commonService,
+        public NoteController(IGenericService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> commonService,
              IValidator<NotaInsertDTos> validationInsert, IValidator<NotaUpdateDTos> validationUpdate )
         {
             _serviceNota = commonService;
@@ -26,6 +26,8 @@ namespace StoreDeLaCruz.Controllers
         public async Task<IEnumerable<NotaDTos>> GetAll () =>
             await _serviceNota.GetAll();
 
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
         [HttpGet("{id}")]
         public async Task<ActionResult<NotaDTos>> GetById(int id)
         {
@@ -35,6 +37,9 @@ namespace StoreDeLaCruz.Controllers
         }
 
 
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(201)]
         [HttpPost]
         public async Task<ActionResult<NotaDTos>> Add(NotaInsertDTos notaInsertDTos)
         {
@@ -46,11 +51,14 @@ namespace StoreDeLaCruz.Controllers
                 return BadRequest(validationInsert.Errors);
             }
 
-            var folder = await _serviceNota.Add(notaInsertDTos);
+            var note = await _serviceNota.Add(notaInsertDTos);
 
-            return folder == null ? NotFound() : Ok(folder);
+            return note == null ? NotFound() : CreatedAtAction(nameof(GetById), new { id = note.ID }, note);
         }
 
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(201)]
         [HttpPut("{id}")]
         public async Task<ActionResult<NotaDTos>> Update(int id, NotaUpdateDTos notaUpdateD)
         {
@@ -66,12 +74,15 @@ namespace StoreDeLaCruz.Controllers
             return folderUpdate == null ? NotFound() : Ok(folderUpdate);
         }
 
+        
+        [ProducesResponseType(404)]
+        [ProducesResponseType(201)]
         [HttpDelete("{id}")]
         public async Task<ActionResult<NotaDTos>> Delete(int id)
         {
             var folderDelete = await _serviceNota.Delete(id);
 
-            return folderDelete == null ? NotFound() : Ok(folderDelete);
+            return folderDelete == null ? NotFound() : NoContent();
         }
 
     }

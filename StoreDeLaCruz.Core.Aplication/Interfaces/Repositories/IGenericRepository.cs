@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Core.Aplication.Interfaces.Repositories
 {
-    public interface ICommonRepository <TEntity>
+    public interface IGenericRepository <TEntity>
     {
         Task<IEnumerable<TEntity>> GetAll();
 

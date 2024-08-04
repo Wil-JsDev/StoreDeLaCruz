@@ -6,6 +6,7 @@ using FluentValidation;
 using StoreDeLaCruz.Core.Aplication.DTOs.Folder;
 using StoreDeLaCruz.Validation;
 using StoreDeLaCruz.Core.Aplication.DTOs.Nota;
+using StoreDeLaCruz.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -15,8 +16,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSwagerExtension();
-//builder.Services.AddVersioning();
+builder.Services.AddSwagerExtension();
+builder.Services.AddVersioning();
 
 builder.Services.AddInfraestructura(configuration);
 builder.Services.AddApplication();
@@ -41,9 +42,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
-app.UseAuthentication();
+app.UseAuthorization();
 
-//app.UseSwaggerExtension();
+app.UseSwaggerExtension();
+//app.UseMiddleware<CustomMiddleware>(); //Asi se agrega un Middleware
 
 app.MapControllers();
 

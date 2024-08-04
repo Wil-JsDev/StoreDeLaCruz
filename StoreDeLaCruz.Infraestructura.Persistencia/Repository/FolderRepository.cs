@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Infraestructura.Persistencia.Repository
 {
-    public class FolderRepository : ICommonRepository<Folder>
+    public class FolderRepository : IGenericRepository<Folder>
     {
         private StoreDeLaCruzContext _context;
 
