@@ -1,5 +1,6 @@
 using StoreDeLaCruz.Infraestructura.Persistencia;
 using StoreDeLaCruz.Core.Aplication;
+using Newtonsoft;
 using StoreDeLaCruz.Extensions;
 using StoreDeLaCruz.Core.Aplication.Mapping;
 using FluentValidation;
@@ -11,6 +12,7 @@ using StoreDeLaCruz.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 // Add services to the container.
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
