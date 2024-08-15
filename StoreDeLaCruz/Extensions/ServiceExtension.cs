@@ -12,9 +12,9 @@ namespace StoreDeLaCruz.Extensions
             service.AddSwaggerGen(option =>
             {
 
-                option.SwaggerDoc("V1", new OpenApiInfo
+                option.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Version = "V1",
+                    Version = "v1",
                     Title = "Store De La Cruz",
                     Description = "Esta API de una tienda",
                     Contact = new OpenApiContact
