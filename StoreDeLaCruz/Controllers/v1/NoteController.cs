@@ -3,94 +3,94 @@ using FluentValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoreDeLaCruz.Core.Aplication.DTOs.Nota;
-using StoreDeLaCruz.Core.Aplication.Features.Notes.Commands.CreateNotes;
-using StoreDeLaCruz.Core.Aplication.Features.Notes.Commands.DeleteNotes;
-using StoreDeLaCruz.Core.Aplication.Features.Notes.Commands.UpdateNotes;
-using StoreDeLaCruz.Core.Aplication.Features.Notes.Queries.GetAllNotes;
-using StoreDeLaCruz.Core.Aplication.Features.Notes.Queries.GetNoteById;
 using StoreDeLaCruz.Core.Aplication.Interfaces.Service;
 
 namespace StoreDeLaCruz.Controllers.v1
 {
     [ApiVersion("1.0")]
     public class NoteController : BaseController
-    {     
+    {
+        private INoteService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> _serviceNota;
+        private IValidator<NotaInsertDTos> _validationInsert;
+        private IValidator<NotaUpdateDTos> _validationUpdate;
+
+        public NoteController(INoteService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> serviceNota,
+             IValidator<NotaInsertDTos> validationInsert, IValidator<NotaUpdateDTos> validationUpdate)
+        {
+            _serviceNota = serviceNota;
+            _validationInsert = validationInsert;
+            _validationUpdate = validationUpdate;
+        }
+
         [HttpGet]
-        public async Task<IActionResult> GetAll() =>
-             Ok(await Mediator.Send(new GetAllNotesQuery()));
+        public async Task<IEnumerable<NotaDTos>> GetAll() =>
+            await _serviceNota.GetAll();
 
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<NotaDTos>> GetById(int id)
         {
-            try
-            {
-                return Ok(await Mediator.Send(new GetNotesByIdQuery { Id = id }));
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
-            }
-            
+            var folderId = await _serviceNota.GetById(id);
+
+            return folderId == null ? NotFound() : Ok(folderId);
         }
 
 
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(201)]
         [HttpPost]
-        public async Task<IActionResult> Add(CreateNoteCommand command)
+        public async Task<ActionResult<NotaDTos>> Add(NotaInsertDTos notaInsertDTos)
         {
-            try
+
+            var validationInsert = await _validationInsert.ValidateAsync(notaInsertDTos);
+
+            if (!validationInsert.IsValid)
             {
-                await Mediator.Send(command);
-                return NoContent();
+                return BadRequest(validationInsert.Errors);
             }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
-            }
-            
+
+            var note = await _serviceNota.Add(notaInsertDTos);
+
+            return note == null ? NotFound() : CreatedAtAction(nameof(GetById), new { id = note.ID }, note);
         }
 
-        //Try() Catch es solo para devolver StatusCode500
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        //[HttpGet]
+        //public async Task<ActionResult<NotaDTos>> Filter([FromQuery] string filter)
+        //{
+        //    var filterResult = await _serviceNota.Filter(filter);
+
+        //    return filterResult == null ? NotFound() : Ok(filterResult);
+        //}
+
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(201)]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, UpdateNoteCommand command)
+        public async Task<ActionResult<NotaDTos>> Update(int id, NotaUpdateDTos notaUpdateD)
         {
-            try
-            {
-                if (id != command.Id)
-                {
-                    return BadRequest();
-                }
+            var validationUpdate = await _validationUpdate.ValidateAsync(notaUpdateD);
 
-                return Ok(await Mediator.Send(command));
-            }
-            catch (Exception ex)
+            if (!validationUpdate.IsValid)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+                BadRequest(validationUpdate.Errors);
             }
+
+            var folderUpdate = await _serviceNota.Update(id, notaUpdateD);
+
+            return folderUpdate == null ? NotFound() : Ok(folderUpdate);
         }
 
 
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(201)]
         [HttpDelete("{id}")]
         public async Task<ActionResult<NotaDTos>> Delete(int id)
         {
-            try
-            {
-                await Mediator.Send(new DeleteNoteByIdCommand { Id = id });
+            var folderDelete = await _serviceNota.Delete(id);
 
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status404NotFound, ex.Message);
-            }
+            return folderDelete == null ? NotFound() : NoContent();
         }
 
     }
