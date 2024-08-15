@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using StoreDeLaCruz.Core.Aplication.DTOs.Folder;
 using StoreDeLaCruz.Core.Aplication.Interfaces.Service;
 
-namespace StoreDeLaCruz.Controllers
+namespace StoreDeLaCruz.Controllers.v1
 {
     [ApiVersion("1.0")]
     public class FolderController : BaseController
@@ -38,7 +38,7 @@ namespace StoreDeLaCruz.Controllers
         [HttpPost]
         public async Task<ActionResult<FolderDTos>> Add(FolderInsertDTos insertDTos)
         {
-            
+
             var validationResult = await _validator.ValidateAsync(insertDTos);
 
             if (!validationResult.IsValid)

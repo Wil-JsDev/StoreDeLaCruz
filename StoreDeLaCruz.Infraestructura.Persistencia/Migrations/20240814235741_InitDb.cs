@@ -40,7 +40,7 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
                 {
                     table.PrimaryKey("PK_Notas", x => x.NotaId);
                     table.ForeignKey(
-                        name: "FK_Notas_Folders_FolderId",
+                        name: "FK_FolderId",
                         column: x => x.FolderId,
                         principalTable: "Folders",
                         principalColumn: "FolderId",

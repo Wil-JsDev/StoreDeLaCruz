@@ -14,9 +14,11 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Context
         {
         }
 
+        #region Models
         public DbSet<Nota> Notas { get; set; }
 
         public DbSet<Folder> Folders { get; set; }
+        #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,10 +31,13 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Context
             #endregion
 
             #region ForeignKey
-            modelBuilder.Entity<Nota>()
-                .HasOne<Folder>()
-                .WithMany()
-                .HasForeignKey(f => f.FolderId);
+            modelBuilder.Entity<Folder>()
+                .HasMany(f => f.Notas)
+                .WithOne(f => f.Folder)
+                .HasForeignKey(f => f.FolderId)
+                .IsRequired()
+                .HasConstraintName("FK_FolderId");
+            
             #endregion
 
             #region Nota

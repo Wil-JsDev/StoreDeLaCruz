@@ -43,7 +43,14 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Repository
        public IEnumerable<Nota> Search(Func<Nota, bool> filter) =>
              _context.Notas.Where(filter).ToList();
 
-       public async Task Save() =>
+       public async Task<IEnumerable<Nota>> Search(string filter)
+        {
+            var filterNota = _context.Notas.Where(n => n.Titulo.Contains(filter));
+                                                                                                   
+            return filterNota;
+        }
+
+        public async Task Save() =>
             await _context.SaveChangesAsync();
 
     }

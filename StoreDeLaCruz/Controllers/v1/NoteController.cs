@@ -5,25 +5,25 @@ using Microsoft.AspNetCore.Mvc;
 using StoreDeLaCruz.Core.Aplication.DTOs.Nota;
 using StoreDeLaCruz.Core.Aplication.Interfaces.Service;
 
-namespace StoreDeLaCruz.Controllers
+namespace StoreDeLaCruz.Controllers.v1
 {
     [ApiVersion("1.0")]
     public class NoteController : BaseController
     {
-        private IGenericService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> _serviceNota;
+        private INoteService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> _serviceNota;
         private IValidator<NotaInsertDTos> _validationInsert;
         private IValidator<NotaUpdateDTos> _validationUpdate;
 
-        public NoteController(IGenericService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> commonService,
-             IValidator<NotaInsertDTos> validationInsert, IValidator<NotaUpdateDTos> validationUpdate )
+        public NoteController(INoteService<NotaDTos, NotaInsertDTos, NotaUpdateDTos> serviceNota,
+             IValidator<NotaInsertDTos> validationInsert, IValidator<NotaUpdateDTos> validationUpdate)
         {
-            _serviceNota = commonService;
+            _serviceNota = serviceNota;
             _validationInsert = validationInsert;
             _validationUpdate = validationUpdate;
         }
 
         [HttpGet]
-        public async Task<IEnumerable<NotaDTos>> GetAll () =>
+        public async Task<IEnumerable<NotaDTos>> GetAll() =>
             await _serviceNota.GetAll();
 
         [ProducesResponseType(404)]
@@ -56,6 +56,14 @@ namespace StoreDeLaCruz.Controllers
             return note == null ? NotFound() : CreatedAtAction(nameof(GetById), new { id = note.ID }, note);
         }
 
+        //[HttpGet]
+        //public async Task<ActionResult<NotaDTos>> Filter([FromQuery] string filter)
+        //{
+        //    var filterResult = await _serviceNota.Filter(filter);
+
+        //    return filterResult == null ? NotFound() : Ok(filterResult);
+        //}
+
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ProducesResponseType(201)]
@@ -63,7 +71,7 @@ namespace StoreDeLaCruz.Controllers
         public async Task<ActionResult<NotaDTos>> Update(int id, NotaUpdateDTos notaUpdateD)
         {
             var validationUpdate = await _validationUpdate.ValidateAsync(notaUpdateD);
-            
+
             if (!validationUpdate.IsValid)
             {
                 BadRequest(validationUpdate.Errors);
@@ -74,7 +82,7 @@ namespace StoreDeLaCruz.Controllers
             return folderUpdate == null ? NotFound() : Ok(folderUpdate);
         }
 
-        
+
         [ProducesResponseType(404)]
         [ProducesResponseType(201)]
         [HttpDelete("{id}")]

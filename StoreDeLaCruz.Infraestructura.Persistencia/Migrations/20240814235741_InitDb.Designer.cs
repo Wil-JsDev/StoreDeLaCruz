@@ -12,7 +12,7 @@ using StoreDeLaCruz.Infraestructura.Persistencia.Context;
 namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
 {
     [DbContext(typeof(StoreDeLaCruzContext))]
-    [Migration("20240722055634_InitDb")]
+    [Migration("20240814235741_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -79,11 +79,19 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
 
             modelBuilder.Entity("StoreDeLaCruz.Core.Domain.Entities.Nota", b =>
                 {
-                    b.HasOne("StoreDeLaCruz.Core.Domain.Entities.Folder", null)
-                        .WithMany()
+                    b.HasOne("StoreDeLaCruz.Core.Domain.Entities.Folder", "Folder")
+                        .WithMany("Notas")
                         .HasForeignKey("FolderId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_FolderId");
+
+                    b.Navigation("Folder");
+                });
+
+            modelBuilder.Entity("StoreDeLaCruz.Core.Domain.Entities.Folder", b =>
+                {
+                    b.Navigation("Notas");
                 });
 #pragma warning restore 612, 618
         }

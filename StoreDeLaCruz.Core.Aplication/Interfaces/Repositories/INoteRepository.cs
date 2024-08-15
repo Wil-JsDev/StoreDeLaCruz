@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreDeLaCruz.Core.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace StoreDeLaCruz.Core.Aplication.Interfaces.Repositories
 {
     public interface INoteRepository<TEntity> : IGenericRepository<TEntity>
     {  
-        IEnumerable<TEntity> Search(Func<TEntity, bool> filter);
+       Task<IEnumerable<TEntity>> Search(string filter);
     }
 }
