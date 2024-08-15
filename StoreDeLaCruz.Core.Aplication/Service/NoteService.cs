@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace StoreDeLaCruz.Core.Aplication.Service
 {
-    public class NoteService : IGenericService<NotaDTos, NotaInsertDTos, NotaUpdateDTos>
+    public class NoteService : INoteService<NotaDTos, NotaInsertDTos, NotaUpdateDTos>
     {
         private INoteRepository <Nota> _noteRepository;
         private IMapper _mapper;
@@ -89,5 +89,16 @@ namespace StoreDeLaCruz.Core.Aplication.Service
             return null;
         }
 
+        public async Task<IEnumerable<NotaDTos>> Filter(string filter)
+        {
+            var resultFilter = await _noteRepository.Search(filter);
+            
+            if (resultFilter != null)
+            {
+                return resultFilter.Select(b => _mapper.Map<NotaDTos>(b));
+            }
+
+            return  null;
+        }
     }
 }

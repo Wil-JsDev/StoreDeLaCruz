@@ -11,5 +11,8 @@ namespace StoreDeLaCruz.Core.Domain.Entities
         public int FolderId {  get; set; }
 
         public string Name { get; set; }
+
+        public ICollection<Nota> Notas { get; set; }
+ 
     }
 }
