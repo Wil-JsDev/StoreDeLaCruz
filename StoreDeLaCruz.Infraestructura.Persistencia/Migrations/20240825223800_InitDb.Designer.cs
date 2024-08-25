@@ -12,7 +12,7 @@ using StoreDeLaCruz.Infraestructura.Persistencia.Context;
 namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
 {
     [DbContext(typeof(StoreDeLaCruzContext))]
-    [Migration("20240814235741_InitDb")]
+    [Migration("20240825223800_InitDb")]
     partial class InitDb
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
