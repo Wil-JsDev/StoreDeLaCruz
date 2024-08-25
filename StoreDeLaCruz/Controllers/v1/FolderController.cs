@@ -1,5 +1,6 @@
 ﻿using Asp.Versioning;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using StoreDeLaCruz.Core.Aplication.DTOs.Folder;
@@ -8,6 +9,7 @@ using StoreDeLaCruz.Core.Aplication.Interfaces.Service;
 namespace StoreDeLaCruz.Controllers.v1
 {
     [ApiVersion("1.0")]
+    [Authorize(Roles = "Admin")]
     public class FolderController : BaseController
     {
 

@@ -10,7 +10,7 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Context
 {
     public class StoreDeLaCruzContext : DbContext
     {
-        public StoreDeLaCruzContext(DbContextOptions options) : base(options)
+        public StoreDeLaCruzContext(DbContextOptions<StoreDeLaCruzContext> options) : base(options)
         {
         }
 
