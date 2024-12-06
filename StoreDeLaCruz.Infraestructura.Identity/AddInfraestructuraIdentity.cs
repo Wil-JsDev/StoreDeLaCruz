@@ -22,11 +22,9 @@ namespace StoreDeLaCruz.Infraestructura.Identity
         {
 
             #region Context
-            services.AddDbContext<IdentityContext>(p =>
-            {
-                p.UseSqlServer(configuration.GetConnectionString("IdentityTiendaDeLaCruz"),
-                m => m.MigrationsAssembly(typeof(IdentityContext).Assembly.FullName));   
-            });
+            services.AddDbContext<IdentityContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("IdentityTiendaDeLaCruz"),
+            b => b.MigrationsAssembly("StoreDeLaCruz.Infraestructura.Identity")));
             #endregion
 
             //Se debe de hacer la inyeccion de dependencia aqui desde Application a esta capa
