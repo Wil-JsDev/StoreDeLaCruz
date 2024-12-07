@@ -131,7 +131,7 @@ namespace StoreDeLaCruz.Infraestructura.Identity.Service
                 await _emailService.SenAsync(new EmailRequestDto
                 {
                     To = user.Email,
-                    Body = $"Please confirm your account visiting this url {verification}",
+                        Body = $"<p>Please confirm your account by visiting this URL:</p><p><a href=\"{verification}\">{verification}</a></p>",
                     Subject = "Confirm registration"
                 });
 

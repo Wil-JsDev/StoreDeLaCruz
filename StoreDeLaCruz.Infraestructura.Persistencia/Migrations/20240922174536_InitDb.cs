@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,9 +16,9 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
                 name: "Folders",
                 columns: table => new
                 {
-                    FolderId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
+                    FolderId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "character varying(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -28,13 +29,13 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Migrations
                 name: "Notas",
                 columns: table => new
                 {
-                    NotaId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    FolderId = table.Column<int>(type: "int", nullable: false),
-                    Titulo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Contenido = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PrioridadTarea = table.Column<int>(type: "int", nullable: false),
-                    FechaDeCreacion = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    NotaId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    FolderId = table.Column<int>(type: "integer", nullable: false),
+                    Titulo = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    Contenido = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    PrioridadTarea = table.Column<int>(type: "integer", nullable: false),
+                    FechaDeCreacion = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {

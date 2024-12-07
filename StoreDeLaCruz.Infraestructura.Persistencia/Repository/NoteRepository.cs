@@ -40,14 +40,16 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia.Repository
             _context.Notas.Remove(entity);
         }
 
-       public IEnumerable<Nota> Search(Func<Nota, bool> filter) =>
-             _context.Notas.Where(filter).ToList();
-
        public async Task<IEnumerable<Nota>> Search(string filter)
         {
-            var filterNota = _context.Notas.Where(n => n.Titulo.Contains(filter));
-                                                                                                   
-            return filterNota;
+            var query = _context.Notas.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filter))
+            {
+                return query.Where(n => n.Titulo.Contains(filter));
+            }
+
+            return null;
         }
 
         public async Task Save() =>

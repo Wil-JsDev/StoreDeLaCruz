@@ -93,11 +93,7 @@ namespace StoreDeLaCruz.Core.Aplication.Service
         {
             var resultFilter = await _noteRepository.Search(filter);
             
-            if (resultFilter != null)
-            {
-                return resultFilter.Select(b => _mapper.Map<NotaDTos>(b));
-            }
-
+            
             return  null;
         }
     }

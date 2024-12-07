@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreDeLaCruz.Core.Domain",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreDeLaCruz.Infraestructura.Persistencia", "StoreDeLaCruz.Infraestructura.Persistencia\StoreDeLaCruz.Infraestructura.Persistencia.csproj", "{93BFE115-C1F3-46DA-AFDC-50A95763FF6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreDeLaCruz.Insfraestructura.Shared", "StoreDeLaCruz.Insfraestructura.Shared\StoreDeLaCruz.Insfraestructura.Shared.csproj", "{A31B6F95-C7B3-4E41-8462-9CB722D92A02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreDeLaCruz.Insfraestructura.Shared", "StoreDeLaCruz.Insfraestructura.Shared\StoreDeLaCruz.Insfraestructura.Shared.csproj", "{A31B6F95-C7B3-4E41-8462-9CB722D92A02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreDeLaCruz.Infraestructura.Identity", "StoreDeLaCruz.Infraestructura.Identity\StoreDeLaCruz.Infraestructura.Identity.csproj", "{482F0C01-F83C-4891-AC57-7AEC431DFCA6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoreDeLaCruz.Infraestructura.Identity", "StoreDeLaCruz.Infraestructura.Identity\StoreDeLaCruz.Infraestructura.Identity.csproj", "{482F0C01-F83C-4891-AC57-7AEC431DFCA6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

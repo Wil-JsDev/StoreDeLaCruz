@@ -19,7 +19,7 @@ namespace StoreDeLaCruz.Infraestructura.Persistencia
         {
             services.AddDbContext<StoreDeLaCruzContext>(p =>
             {
-                p.UseSqlServer(configuration.GetConnectionString("TiendaDeLaCruz"));
+                p.UseNpgsql(configuration.GetConnectionString("TiendaDeLaCruz"));
             });
 
             //Se debe de hacer la inyeccion de dependencia aqui desde Application a esta capa
